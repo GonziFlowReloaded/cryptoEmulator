@@ -29,19 +29,14 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QFrame" name="frameGrafica">
+        <widget class="QGroupBox" name="groupBoxGrafica">
          <property name="minimumSize">
           <size>
            <width>300</width>
            <height>200</height>
           </size>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4"/>
         </widget>
        </item>
        <item>
@@ -237,7 +232,6 @@ font: 75 14pt &quot;Unispace&quot;;
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

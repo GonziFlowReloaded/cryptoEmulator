@@ -1,4 +1,5 @@
 import imp
+from turtle import pensize
 from webbrowser import get
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
@@ -7,6 +8,7 @@ from PyQt5.uic import loadUi
 import sys
 import pyqtgraph as pg
 import matplotlib as mpl
+from matplotlib import pyplot as plt
 import numpy as np
 import websocket
 import json
@@ -20,7 +22,9 @@ class App(QMainWindow):
         super(App, self).__init__()
         loadUi('gui.ui', self)
         self.timer = QTimer()
-
+        self.tiempo = 0
+        self.listAux = []
+        self.listaTiempo = []
         #-----------------ini Labels-----------------#
         self.labelUsdt.setText('1000')
         self.labelBtc.setText('0')
@@ -31,17 +35,50 @@ class App(QMainWindow):
         self.botonComprar.clicked.connect(self.usdtToBtc)
         self.botonVender.clicked.connect(self.btcToUsdt)
         
-        #-----------------ini Timer-----------------#
-        self.timer.timeout.connect(self.update)
-        self.timer.start(1000)
         
         #-----------------ini Grafica-----------------#
-        #self.grafica = pg.PlotWidget()
+        
+        self.grafica = pg.PlotWidget()
+        self.grafica.setBackground('w')
+        self.grafica.showGrid(x=True, y=True)
+        self.grafica.setLabel('left', 'Precio', units='USDT')
+        self.grafica.setLabel('bottom', 'Tiempo', units='s')
+
+        
+
+        self.timer = QTimer()
+
+        self.timer.timeout.connect(self.update)
+        time.sleep(4)
+        self.timer.start(1000)
+
+        
+        
+        self.groupBoxGrafica.layout().addWidget(self.grafica)
+        
+        
+
 
 
         
         
         self.show()
+
+
+    def update(self):
+        global btcLastPrice
+        
+        self.listAux.append(btcLastPrice)
+        self.listaTiempo.append(self.tiempo)
+        self.grafica.plotItem.clear()
+        self.grafica.plot(self.listaTiempo, self.listAux, pen='r', pensize=2)
+        self.tiempo += 1
+        
+
+        
+
+
+
 
     def usdtToBtc(self):
         

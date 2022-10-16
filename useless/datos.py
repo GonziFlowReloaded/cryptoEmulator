@@ -16,9 +16,6 @@ def on_close(ws):
 
 def on_message(ws, message):
     json_message = json.loads(message)
-    #pprint.pprint(json_message)
-    #Show last price
-    #print("Ultimo precio: ", json_message["k"]["c"])
     global btcLastPrice 
     btcLastPrice = float(json_message["k"]["c"])
 
