@@ -39,10 +39,11 @@ class App(QMainWindow):
         #-----------------ini Grafica-----------------#
         
         self.grafica = pg.PlotWidget()
-        self.grafica.setBackground('w')
+        self.grafica.setBackground('black')
         self.grafica.showGrid(x=True, y=True)
-        self.grafica.setLabel('left', 'Precio', units='USDT')
-        self.grafica.setLabel('bottom', 'Tiempo', units='s')
+        self.grafica.setLabel('left', 'Precio (USDT)', unit='USDT', color='white', **{'font-size': '20pt'})
+        self.grafica.setLabel('bottom', 'Tiempo (s)', unit='s', color='white', **{'font-size': '20pt'})
+
 
         
 
@@ -71,7 +72,7 @@ class App(QMainWindow):
         self.listAux.append(btcLastPrice)
         self.listaTiempo.append(self.tiempo)
         self.grafica.plotItem.clear()
-        self.grafica.plot(self.listaTiempo, self.listAux, pen='r', pensize=2)
+        self.grafica.plot(self.listaTiempo, self.listAux, pen='g', pensize=3)
         self.tiempo += 1
         
 
