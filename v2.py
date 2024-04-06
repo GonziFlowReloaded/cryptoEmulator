@@ -1,12 +1,16 @@
 import imp
 from turtle import pensize
 from webbrowser import get
-from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.uic import loadUi
+import mplfinance as mpf
+import datetime as dt
+from pandas_datareader import data as datatex
+import yfinance as yf
 import sys
 import pyqtgraph as pg
+
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 import numpy as np
@@ -25,6 +29,7 @@ class App(QMainWindow):
         self.tiempo = 0
         self.listAux = []
         self.listaTiempo = []
+        
         #-----------------ini Labels-----------------#
         self.labelUsdt.setText('1000')
         self.labelBtc.setText('0')
@@ -35,15 +40,24 @@ class App(QMainWindow):
         self.botonComprar.clicked.connect(self.usdtToBtc)
         self.botonVender.clicked.connect(self.btcToUsdt)
         
+        #-----------------ini data-----------------#
+        yf.pdr_override()
+
+        self.y_simbolo = 'BTC-USD'
+        self.y_inicio = '2022-01-01'
+        self.y_fin = dt.datetime.now()
         
+        data = datatex.get_data_yahoo(self.y_simbolo, start=self.y_inicio, end=self.y_fin)
+
         #-----------------ini Grafica-----------------#
+        colors = mpf.make_marketcolors(up='g', down='r', edge='inherit', wick='inherit', volume='in')
+        mpf_style = mpf.make_mpf_style(base_mpf_style='nightclouds', marketcolors=colors)
         
+        # self.grafica = mpf.plot(data=data, type='candle', style=mpf_style, volume=True, title='BTC/USD', ylabel='Precio (USDT)', ylabel_lower='Volumen')
         self.grafica = pg.PlotWidget()
         self.grafica.setBackground('black')
         self.grafica.showGrid(x=True, y=True)
-        self.grafica.setLabel('left', 'Precio (USDT)', unit='USDT', color='white', **{'font-size': '20pt'})
-        self.grafica.setLabel('bottom', 'Tiempo (s)', unit='s', color='white', **{'font-size': '20pt'})
-
+        self.grafica.setLabel('left', 'Precio', units='USDT')
 
         
 
