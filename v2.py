@@ -24,7 +24,7 @@ import time
 class App(QMainWindow):
     def __init__(self):
         super(App, self).__init__()
-        loadUi('gui.ui', self)
+        loadUi('gui2.ui', self)
         self.timer = QTimer()
         self.tiempo = 0
         self.listAux = []
